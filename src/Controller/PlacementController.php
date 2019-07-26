@@ -16,7 +16,7 @@
          */
         public function index() {
 
-            return new Response("<html> <body> <h1> Login underconstruction </h1> </body> </html>");
+            return $this->render("home/index.html.twig");
 
         }
 
