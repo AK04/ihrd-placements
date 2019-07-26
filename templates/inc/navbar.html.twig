@@ -12,7 +12,11 @@
                 <a href="/" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-                <a href="/article/new" class="nav-link"> Login/Sign-Up </a>
+                {% if loggedIn %}
+                <a href="#" class="nav-link"> Logout </a>
+                {% else %}
+                <a href="#" class="nav-link"> Login/Sign-Up </a>
+                {% endif %}
             </li>
         </ul>
     </div>
