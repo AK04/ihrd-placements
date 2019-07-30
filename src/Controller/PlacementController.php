@@ -2,21 +2,17 @@
 
     namespace App\Controller;
 
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     use Symfony\Component\Routing\Annotation\Route;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
-    class PlacementController extends Controller {
+    class PlacementController extends AbstractController {
         /**
          * @Route("/", name ="index")
          */
         public function index() {
 
-            return $this->render("home/index.html.twig", array('loggedIn' => false));
+            return $this->render("home/index.html.twig");
 
         }
 
