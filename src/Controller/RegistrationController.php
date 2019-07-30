@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\User;
 use App\Form\UserType;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class RegistrationController extends Controller {
 
@@ -43,6 +44,16 @@ class RegistrationController extends Controller {
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $token = new UsernamePasswordToken(
+                $user,
+                $password,
+                'main',
+                $user->getRoles()
+            );
+
+            $this->get('security.token_storage')->setToken($token);
+            $this->get('session')->set('_security_main', serialize($token));
 
             $this->addFlash('success', 'You have successfully registered!');
 

@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\Unique;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface, \Serializable
 {
@@ -108,11 +112,11 @@ class User implements UserInterface, \Serializable
         ];
     }
     public function getSalt() {
-
+        return null;
     }
     public function eraseCredentials()
     {
-        
+        $this->plainPassword = null;
     }
 
 }
