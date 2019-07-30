@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,8 +18,23 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('username', TextType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => true
+            ))
+            ->add('email', EmailType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => true
+            ))
+            ->add('userType', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => true,
+                'choices' => [
+                    'Student' => 1,
+                    'Institute' => 2,
+                    'Company' => 3
+                ]
+            ))
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
@@ -26,9 +42,11 @@ class UserType extends AbstractType
                 ],
                 'second_options' => [
                     'label' => 'Repeat Password'
-                ]
+                ],
+                'options' => ['attr' => array('class' => 'form-control') ],
+                'required' => true
             ])
-            ->add('Register', SubmitType::class)
+            ->add('Register', SubmitType::class, array('label' => 'Register', 'attr' => array('class' => 'btn btn-primary mt-3')))
         ;
     }
 

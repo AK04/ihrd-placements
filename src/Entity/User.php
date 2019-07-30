@@ -38,6 +38,27 @@ class User implements UserInterface, \Serializable
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $userType;
+
+    /**
+     * @return mixed
+     */
+    public function getUserType()
+    {
+        return $this->userType;
+    }
+
+    /**
+     * @param mixed $userType
+     */
+    public function setUserType($userType): void
+    {
+        $this->userType = $userType;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

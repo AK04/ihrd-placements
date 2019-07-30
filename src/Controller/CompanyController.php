@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompanyController extends AbstractController {
 
     /**
-     * @Route("/company", name"company_home")
+     * @Route("/company", name="company_home")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function companyHome() {
@@ -27,7 +27,7 @@ class CompanyController extends AbstractController {
 
     /**
      * @Route("/company/info", name="company_info")
-     * @Method({GET, POST})
+     * @Method({"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -36,13 +36,23 @@ class CompanyController extends AbstractController {
         $company = new Company();
 
         $form = $this->createFormBuilder($company)
-            ->add('name', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => true))
-            ->add('nature', ChoiceType::class, array('attr' => array('class' => 'form-control'), 'required' => true))
+            ->add('name', TextType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => true
+            ))
+            ->add('nature', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => true,
+                'choices' => [
+                    'Computer Science' => 'Computer Science',
+                    'Electronics' => 'Electronics'
+                ]
+            ))
             ->add('email', EmailType::class, array('attr' => array('class' => 'form-control'), 'required' => true))
             ->add('Save', SubmitType::class, array('label' => 'Save', 'attr' => array('class' => 'btn btn-primary mt-3')))
             ->getForm();
 
-        $form = handleRequest($request);
+        $form->handleRequest($request);
 
         if( $form->isSubmitted() && $form->isValid() ) {
 
