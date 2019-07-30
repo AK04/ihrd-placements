@@ -12,7 +12,7 @@
 
     class PlacementController extends Controller {
         /**
-         * @Route("/")
+         * @Route("/", name ="index")
          */
         public function index() {
 
