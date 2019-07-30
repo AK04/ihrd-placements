@@ -3,6 +3,7 @@
 {% block title  %} IHRD Placements {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}" >
 {% endblock %}
 
 {% block body %}
@@ -19,6 +20,7 @@
         <input type="password" id="_password" name="_password" class="form-control" placeholder="Password" required>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <a class="btn btn-lg btn-outline-primary btn-block" href="{{ path('registeration') }}">Register</a>
 
     </form>
 </div>

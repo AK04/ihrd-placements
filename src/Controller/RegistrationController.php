@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -10,9 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\User;
 use App\Form\UserType;
+
+
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class RegistrationController extends AbstractController {
+class RegistrationController extends Controller {
 
     /**
      * @Route("/register", name="registeration")
@@ -23,9 +25,7 @@ class RegistrationController extends AbstractController {
 
         $user = new User();
 
-        $form = $this->createForm(UserType::class, $user, [
-
-        ]);
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
