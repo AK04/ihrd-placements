@@ -48,8 +48,14 @@ class CompanyController extends AbstractController {
                     'Electronics' => 'Electronics'
                 ]
             ))
-            ->add('email', EmailType::class, array('attr' => array('class' => 'form-control'), 'required' => true))
-            ->add('Save', SubmitType::class, array('label' => 'Save', 'attr' => array('class' => 'btn btn-primary mt-3')))
+            ->add('email', EmailType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => true
+            ))
+            ->add('Save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr' => array('class' => 'btn btn-primary mt-3')
+            ))
             ->getForm();
 
         $form->handleRequest($request);
