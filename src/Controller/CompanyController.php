@@ -11,13 +11,14 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CompanyController extends AbstractController {
 
     /**
      * @Route("/company", name="company_home")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function companyHome() {
 
@@ -29,7 +30,7 @@ class CompanyController extends AbstractController {
      * @Route("/company/info", name="company_info")
      * @Method({"GET", "POST"})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function companyInfo(Request $request) {
 
