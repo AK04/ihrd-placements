@@ -1,5 +1,20 @@
 {% extends "base.html.twig" %}
 
+{% block title  %} Registration {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}" >
+{% endblock %}
+
+
 {% block body %}
-    {{ form(registration_form) }}
+
+    <div class="text-center">
+    <div class="button-display">
+        <a class="btn btn-lg btn-outline-primary btn-block" href="{{ path('register_student') }}">Student</a>
+        <a class="btn btn-lg btn-outline-dark btn-block" href="{{ path('register_institute') }}">Institute</a>
+        <a class="btn btn-lg btn-outline-danger btn-block" href="{{ path('register_company') }}">Company</a>
+    </div>
+    </div>
+
 {% endblock %}

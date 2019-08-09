@@ -36,52 +36,7 @@ class RegistrationController extends Controller {
      */
     public function register(Request $request) {
 
-        $user = new User();
-
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-
-        if( $form->isSubmitted() && $form->isValid()) {
-
-            $details = $form->getData();
-
-            dump($details);
-
-            $password = $this
-                ->get('security.password_encoder')
-                ->encodePassword(
-                    $user,
-                    $user->getPlainPassword()
-                    )
-            ;
-
-            $user->setPassword($password);
-
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $token = new UsernamePasswordToken(
-                $user,
-                $password,
-                'main',
-                $user->getRoles()
-            );
-
-            $this->get('security.token_storage')->setToken($token);
-            $this->get('session')->set('_security_main', serialize($token));
-
-            $this->addFlash('success', 'You have successfully registered!');
-
-            return $this->redirectToRoute('index');
-
-        }
-
-        return $this->render('registration/register.html.twig', [
-            'registration_form' => $form->createView(),
-        ]);
+        return $this->render('registration/register.html.twig');
 
     }
 
