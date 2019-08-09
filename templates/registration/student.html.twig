@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block title  %} Register | Student {% endblock %}
+
+{% block body %}
+    {{ form_start(registration_form_student) }}
+    {{ form_widget(registration_form_student) }}
+    {{ form_end(registration_form_student) }}
+{% endblock %}

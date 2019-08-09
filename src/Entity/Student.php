@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StudentRepository")
  */
-class Student
+class Student implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -15,6 +16,18 @@ class Student
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    private $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -27,7 +40,7 @@ class Student
     private $Institute;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $DOB;
 
@@ -52,7 +65,7 @@ class Student
     private $MobileNo;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=1)
      */
     private $DifferentlyAbled;
 
@@ -67,30 +80,54 @@ class Student
     private $Branch;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="smallint")
      */
     private $PassoutYear;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="smallint")
      */
     private $SemesterMarks;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $Approved;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $Placement;
-
-    
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -117,12 +154,12 @@ class Student
         return $this;
     }
 
-    public function getDOB(): ?\DateTimeInterface
+    public function getDOB(): ?string
     {
         return $this->DOB;
     }
 
-    public function setDOB(\DateTimeInterface $DOB): self
+    public function setDOB(string $DOB): self
     {
         $this->DOB = $DOB;
 
@@ -165,24 +202,24 @@ class Student
         return $this;
     }
 
-    public function getMobileNo(): ?int
+    public function getMobileNo(): ?string
     {
         return $this->MobileNo;
     }
 
-    public function setMobileNo(int $MobileNo): self
+    public function setMobileNo(string $MobileNo): self
     {
         $this->MobileNo = $MobileNo;
 
         return $this;
     }
 
-    public function getDifferentlyAbled(): ?bool
+    public function getDifferentlyAbled(): ?string
     {
         return $this->DifferentlyAbled;
     }
 
-    public function setDifferentlyAbled(bool $DifferentlyAbled): self
+    public function setDifferentlyAbled(string $DifferentlyAbled): self
     {
         $this->DifferentlyAbled = $DifferentlyAbled;
 
@@ -213,51 +250,109 @@ class Student
         return $this;
     }
 
-    public function getPassoutYear(): ?int
+    public function getPassoutYear(): ?string
     {
         return $this->PassoutYear;
     }
 
-    public function setPassoutYear(int $PassoutYear): self
+    public function setPassoutYear(string $PassoutYear): self
     {
         $this->PassoutYear = $PassoutYear;
 
         return $this;
     }
 
-    public function getSemesterMarks(): ?int
+    public function getSemesterMarks(): ?string
     {
         return $this->SemesterMarks;
     }
 
-    public function setSemesterMarks(int $SemesterMarks): self
+    public function setSemesterMarks(string $SemesterMarks): self
     {
         $this->SemesterMarks = $SemesterMarks;
 
         return $this;
     }
 
-    public function getApproved(): ?int
+    /**
+     * String representation of object
+     * @link https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
     {
-        return $this->Approved;
+        // TODO: Implement serialize() method.
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+        ]);
     }
 
-    public function setApproved(int $Approved): self
+    /**
+     * Constructs the object
+     * @link https://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
     {
-        $this->Approved = $Approved;
-
-        return $this;
+        // TODO: Implement unserialize() method.
+        list (
+            $this->id,
+            $this->username,
+            $this->password
+            ) = unserialize($serialized);
     }
 
-    public function getPlacement(): ?string
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
     {
-        return $this->Placement;
+        // TODO: Implement getRoles() method.
+        return [
+            'ROLE_USER'
+        ];
     }
 
-    public function setPlacement(string $Placement): self
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
     {
-        $this->Placement = $Placement;
+        // TODO: Implement getSalt() method.
+        return null;
+    }
 
-        return $this;
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 }

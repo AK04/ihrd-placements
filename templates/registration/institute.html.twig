@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block title  %} Register | Institute {% endblock %}
+
+{% block body %}
+    {{ form_start(registration_form_institute) }}
+    {{ form_widget(registration_form_institute) }}
+    {{ form_end(registration_form_institute) }}
+{% endblock %}

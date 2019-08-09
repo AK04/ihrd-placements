@@ -21,6 +21,7 @@
     },
     "require-dev": {
         "symfony/profiler-pack": "^1.0",
+        "symfony/var-dumper": "4.3.*",
         "symfony/web-server-bundle": "4.3.*"
     },
     "config": {

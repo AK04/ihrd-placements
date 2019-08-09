@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block title  %} Register | Company {% endblock %}
+
+{% block body %}
+    {{ form_start(registration_form_company) }}
+    {{ form_widget(registration_form_company) }}
+    {{ form_end(registration_form_company) }}
+{% endblock %}
