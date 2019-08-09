@@ -19,6 +19,9 @@ class StudentController extends AbstractController {
 
     }
 
+    /**
+     * @Route("/student/info", name="student_home")
+     */
     public function studentInfo() {
 
         return ;

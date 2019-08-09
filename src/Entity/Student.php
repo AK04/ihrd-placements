@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -39,8 +40,10 @@ class Student implements UserInterface, \Serializable
      */
     private $Institute;
 
+    private $date;
+
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $DOB;
 
@@ -154,6 +157,22 @@ class Student implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date): void
+    {
+        $this->date = $date;
+    }
+
     public function getDOB(): ?string
     {
         return $this->DOB;
@@ -161,7 +180,7 @@ class Student implements UserInterface, \Serializable
 
     public function setDOB(string $DOB): self
     {
-        $this->DOB = $DOB;
+        $this->DOB = new \DateTime($DOB);
 
         return $this;
     }

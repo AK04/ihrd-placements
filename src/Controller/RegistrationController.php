@@ -71,8 +71,8 @@ class RegistrationController extends Controller {
             ->add('Institute', TextType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
-            ->add('DOB', TextType::class, array(
-                'attr' => array('class' => 'form-control', 'placeholder' => 'dd/mm/yyyy'),
+            ->add('date', TextType::class, array(
+                'attr' => array('class' => 'form-control', 'placeholder' => 'dd-mm-yyyy'),
                 'label' => 'Date of Birth',
             ))
             ->add('Gender', ChoiceType::class, array(
@@ -141,11 +141,9 @@ class RegistrationController extends Controller {
                 )
             ;
 
-            $date = $student->getDOB();
+            $date = $student->getDate();
 
-            $dob = DateTime::createFromFormat('d-m-Y', $date);
-
-            dump($dob->format("d-m-Y"));
+            $student->setDOB($date);
 
             $student->setPassword($password);
 
