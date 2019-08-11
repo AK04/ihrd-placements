@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block title  %} Update | Student {% endblock %}
+
+{% block body %}
+    {{ form_start(update_form_student) }}
+    {{ form_widget(update_form_student) }}
+    {{ form_end(update_form_student) }}
+{% endblock %}

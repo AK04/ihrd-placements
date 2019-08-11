@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,9 +36,26 @@ class CompanyController extends AbstractController {
      */
     public function companyInfo(Request $request) {
 
-        $company = new Company();
+        $user = $this->getUser();
+
+        $company = $this->getDoctrine()->getRepository(Company::class)->find($user->getId());
 
         $form = $this->createFormBuilder($company)
+            ->add('username', TextType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => true
+            ))
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'label' => "Password",
+                ],
+                'second_options' => [
+                    'label' => 'Repeat Password'
+                ],
+                'options' => ['attr' => array('class' => 'form-control') ],
+                'required' => true
+            ])
             ->add('name', TextType::class, array(
                 'attr' => array('class' => 'form-control'),
                 'required' => true
@@ -54,7 +73,7 @@ class CompanyController extends AbstractController {
                 'required' => true
             ))
             ->add('Save', SubmitType::class, array(
-                'label' => 'Save',
+                'label' => 'Update',
                 'attr' => array('class' => 'btn btn-primary mt-3')
             ))
             ->getForm();
@@ -63,14 +82,10 @@ class CompanyController extends AbstractController {
 
         if( $form->isSubmitted() && $form->isValid() ) {
 
-            $company = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->persist($company);
             $entityManager->flush();
 
             return $this->redirectToRoute('company_home');
-
         }
 
         return $this->render("company/info.html.twig", array('form' => $form->createView()));

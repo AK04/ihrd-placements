@@ -92,6 +92,11 @@ class Student implements UserInterface, \Serializable
      */
     private $SemesterMarks;
 
+    /**
+     * @ORM\Column(type="smallint", options={"default":0})
+     */
+    private $approved;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -292,6 +297,24 @@ class Student implements UserInterface, \Serializable
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getApproved()
+    {
+        return $this->approved;
+    }
+
+    /**
+     * @param mixed $approved
+     */
+    public function setApproved($approved): void
+    {
+        $this->approved = $approved;
+    }
+
+
 
     /**
      * String representation of object
