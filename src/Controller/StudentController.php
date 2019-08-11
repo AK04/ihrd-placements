@@ -20,7 +20,7 @@ class StudentController extends AbstractController {
     }
 
     /**
-     * @Route("/student/info", name="student_home")
+     * @Route("/student/info", name="student_info")
      */
     public function studentInfo() {
 

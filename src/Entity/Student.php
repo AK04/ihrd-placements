@@ -346,7 +346,7 @@ class Student implements UserInterface, \Serializable
     {
         // TODO: Implement getRoles() method.
         return [
-            'ROLE_USER'
+            'ROLE_STUDENT'
         ];
     }
 
