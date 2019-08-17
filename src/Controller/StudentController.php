@@ -110,7 +110,7 @@ class StudentController extends AbstractController {
             ->add('SemesterMarks', IntegerType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
-            ->add('Update', SubmitType::class, array('label' => 'Register', 'attr' => array('class' => 'btn btn-primary mt-3')))
+            ->add('Update', SubmitType::class, array('label' => 'Update', 'attr' => array('class' => 'btn btn-primary mt-3')))
 
             ->getForm();
 
