@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Company;
 use App\Entity\Institute;
 use DateTime;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -68,7 +69,9 @@ class RegistrationController extends Controller {
             ->add('Name', TextType::class, array(
                 'attr' => array('class' => 'form-control'),
             ))
-            ->add('Institute', TextType::class, array(
+            ->add('Institute', EntityType::class, array(
+                'class' => Institute::class,
+                'choice_label' => 'Name',
                 'attr' => array('class' => 'form-control')
             ))
             ->add('date', TextType::class, array(

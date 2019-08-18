@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Institute;
 use App\Entity\Student;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -57,7 +59,9 @@ class StudentController extends AbstractController {
             ->add('Name', TextType::class, array(
                 'attr' => array('class' => 'form-control'),
             ))
-            ->add('Institute', TextType::class, array(
+            ->add('Institute', EntityType::class, array(
+                'class' => Institute::class,
+                'choice_label' => 'Name',
                 'attr' => array('class' => 'form-control')
             ))
             ->add('date', TextType::class, array(

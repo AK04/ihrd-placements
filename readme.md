@@ -8,6 +8,7 @@ composer install
 https://stackoverflow.com/questions/12905404/symfony2-slow-initialization-time
 
 # To do
-- Student institute drop down must be from entity
+- Institute functions
+- Company functions
 - Alert messages for invalid login
 - 
