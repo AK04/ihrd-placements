@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title  %} Unapproved Student {% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+
+    <table class="table table-hover">
+
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date of birth</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Native District</th>
+            <th scope="col">Address</th>
+            <th scope="col">Mobile No.</th>
+            <th scope="col">Differently abled</th>
+            <th scope="col">Course</th>
+            <th scope="col">Branch</th>
+            <th scope="col">Passout Year</th>
+            <th scope="col">Semester Marks</th>
+            <th scope="col">Approve</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for student in unapproved %}
+            <th scope="col">{{ student.name }}</th>
+            <th scope="col">{{ student.dob }}</th>
+            <th scope="col">{{ student.gender }}</th>
+            <th scope="col">{{ student.native_district }}</th>
+            <th scope="col">{{ student.address }}</th>
+            <th scope="col">{{ student.mobile_no }}</th>
+            <th scope="col">{{ student.differently_abled }}</th>
+            <th scope="col">{{ student.course }}</th>
+            <th scope="col">{{ student.branch }}</th>
+            <th scope="col">{{ student.passout_year }}</th>
+            <th scope="col">{{ student.semester_marks }}</th>
+            <th scope="col">Approve</th>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}

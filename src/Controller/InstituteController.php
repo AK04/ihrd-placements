@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Institute;
+use App\Entity\Student;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -81,6 +82,26 @@ class InstituteController extends AbstractController {
         }
 
         return $this->render("institute/info.html.twig", array('form' => $form->createView()));
+
+    }
+
+    /**
+     * @Route("/institute/unapproved", name="institute_unapproved")
+     */
+    public function unapprovedStudents() {
+
+        $repository = $this->getDoctrine()->getRepository(Student::class);
+
+        $user = $this->getUser();
+
+        $unapproved = $repository->findOneBy([
+            'Institute' => $user->getName(),
+            'approved' => 0
+        ]);
+
+        return $this->render("institute/unapproved.html.twig", [
+            'unapproved' => $unapproved
+        ]);
 
     }
 

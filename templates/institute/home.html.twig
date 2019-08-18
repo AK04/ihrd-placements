@@ -7,7 +7,7 @@
 
 {% block body %}
     <a href="{{ path('institute_info') }}" class="btn btn-primary btn-lg" role="button" >Update Information</a>
-    <a href="#" class="btn btn-primary btn-lg" role="button" >Approve Students</a>
+    <a href="{{ path('institute_unapproved') }}" class="btn btn-primary btn-lg" role="button" >Approve Students</a>
     <a href="#" class="btn btn-primary btn-lg" role="button" >Upload Student Data</a>
     <a href="#" class="btn btn-primary btn-lg" role="button" >Update Status</a>
 {% endblock %}
