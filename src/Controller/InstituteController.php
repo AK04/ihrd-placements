@@ -94,7 +94,7 @@ class InstituteController extends AbstractController {
 
         $user = $this->getUser();
 
-        $unapproved = $repository->findOneBy([
+        $unapproved = $repository->findBy([
             'Institute' => $user->getName(),
             'approved' => 0
         ]);
@@ -102,6 +102,21 @@ class InstituteController extends AbstractController {
         return $this->render("institute/unapproved.html.twig", [
             'unapproved' => $unapproved
         ]);
+
+    }
+
+    /**
+     * @Route("/institute/approve/{id}", name="institute_approved")
+     * @param Request $request
+     * @param $id
+     */
+    public function approveStudents(Request $request, $id) {
+
+        $student = $this->getDoctrine()->getRepository(Student::class)->findOneBy(["id" => $id]);
+
+        $student->setApproved(1);
+
+        $this->render("institute/approve.html.twig");
 
     }
 

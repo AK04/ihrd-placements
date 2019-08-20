@@ -50,6 +50,16 @@ class RegistrationController extends Controller {
 
         $student = new Student();
 
+        $institutesRepo = $this->getDoctrine()->getRepository(Institute::class);
+
+        $institutes = $institutesRepo->findAll();
+
+        $instituteNames = array();
+
+        foreach ( $institutes as $institute ) {
+            $instituteNames[$institute->getName()] = $institute->getName();
+        }
+
         $form = $this->createFormBuilder($student)
             ->add('username', TextType::class, array(
                 'attr' => array('class' => 'form-control'),
@@ -69,10 +79,9 @@ class RegistrationController extends Controller {
             ->add('Name', TextType::class, array(
                 'attr' => array('class' => 'form-control'),
             ))
-            ->add('Institute', EntityType::class, array(
-                'class' => Institute::class,
-                'choice_label' => 'Name',
-                'attr' => array('class' => 'form-control')
+            ->add('Institute', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => $instituteNames,
             ))
             ->add('date', TextType::class, array(
                 'attr' => array('class' => 'form-control', 'placeholder' => 'dd-mm-yyyy'),
@@ -256,6 +265,8 @@ class RegistrationController extends Controller {
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
 
+            $this->addFlash('success', 'You have successfully registered!');
+
             return $this->redirectToRoute('company_home');
 
         }
@@ -336,6 +347,8 @@ class RegistrationController extends Controller {
 
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
+
+            $this->addFlash('success', 'You have successfully registered!');
 
             return $this->redirectToRoute('institute_home');
 

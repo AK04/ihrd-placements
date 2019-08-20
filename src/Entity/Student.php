@@ -94,9 +94,9 @@ class Student implements UserInterface, \Serializable
     private $SemesterMarks;
 
     /**
-     * @ORM\Column(type="smallint", options={"default":0})
+     * @ORM\Column(type="smallint")
      */
-    private $approved;
+    private $approved = 0;
 
     public function getId(): ?int
     {
@@ -181,7 +181,10 @@ class Student implements UserInterface, \Serializable
 
     public function getDOB(): ?string
     {
-        return $this->DOB;
+        $date = $this->DOB->format("d-m-Y");
+
+        return $date;
+        //return $this->DOB;
     }
 
     public function setDOB(string $DOB): self

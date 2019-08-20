@@ -40,6 +40,16 @@ class StudentController extends AbstractController {
 
         $student = $this->getDoctrine()->getRepository(Student::class)->find($user->getId());
 
+        $institutesRepo = $this->getDoctrine()->getRepository(Institute::class);
+
+        $institutes = $institutesRepo->findAll();
+
+        $instituteNames = array();
+
+        foreach ( $institutes as $institute ) {
+            $instituteNames[$institute->getName()] = $institute->getName();
+        }
+
         $form = $this->createFormBuilder($student)
             ->add('username', TextType::class, array(
                 'attr' => array('class' => 'form-control'),
@@ -59,10 +69,9 @@ class StudentController extends AbstractController {
             ->add('Name', TextType::class, array(
                 'attr' => array('class' => 'form-control'),
             ))
-            ->add('Institute', EntityType::class, array(
-                'class' => Institute::class,
-                'choice_label' => 'Name',
-                'attr' => array('class' => 'form-control')
+            ->add('Institute', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => $instituteNames,
             ))
             ->add('date', TextType::class, array(
                 'attr' => array('class' => 'form-control', 'placeholder' => 'dd-mm-yyyy'),
