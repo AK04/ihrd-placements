@@ -92,5 +92,14 @@ class CompanyController extends AbstractController {
 
     }
 
+    /**
+     * @Route("/company/search/")
+     */
+    public function searchStudents() {
+
+        return $this->render("/company/search.html.twig");
+
+    }
+
 
 }

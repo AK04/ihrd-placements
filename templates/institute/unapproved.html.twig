@@ -2,10 +2,16 @@
 
 {% block title  %} Unapproved Student {% endblock %}
 
+{% block head %}
+
+{% endblock %}
+
 {% block stylesheets %}
 {% endblock %}
 
 {% block body %}
+
+    {% if unapproved %}
 
     <table class="table table-hover">
 
@@ -39,11 +45,15 @@
             <td>{{ student.branch }}</td>
             <td>{{ student.passoutYear }}</td>
             <td>{{ student.semesterMarks }}</td>
-            <td><a href="{{ path('institute_approved', {'id': student.id }) }}" class="btn btn-primary btn-xs">a</a></th>
+            <td> <a href="{{ path('institute_approved', {'id': student.id }) }}" class="btn btn-success btn-sm"> Approve </a> </td>
             </tr>
         {% endfor %}
         </tbody>
 
     </table>
+
+    {% else %}
+        <h2>No students to approve!</h2>
+    {% endif %}
 
 {% endblock %}

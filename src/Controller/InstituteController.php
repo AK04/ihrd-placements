@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -107,16 +108,21 @@ class InstituteController extends AbstractController {
 
     /**
      * @Route("/institute/approve/{id}", name="institute_approved")
-     * @param Request $request
      * @param $id
+     * @return RedirectResponse
      */
-    public function approveStudents(Request $request, $id) {
+    public function approveStudents($id) {
 
         $student = $this->getDoctrine()->getRepository(Student::class)->findOneBy(["id" => $id]);
 
         $student->setApproved(1);
 
-        $this->render("institute/approve.html.twig");
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Student has been approved!');
+
+        return $this->redirectToRoute("institute_unapproved");
 
     }
 
