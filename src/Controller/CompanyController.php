@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Company;
 
+use App\Entity\Institute;
+use App\Entity\Student;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -93,11 +96,51 @@ class CompanyController extends AbstractController {
     }
 
     /**
-     * @Route("/company/search/")
+     * @Route("/company/search-students/", name="company_search_students")
+     * @param Request $request
+     * @return Response
      */
-    public function searchStudents() {
+    public function searchStudents(Request $request) {
 
-        return $this->render("/company/search.html.twig");
+        $institutesRepo = $this->getDoctrine()->getRepository(Institute::class);
+
+        $institutes = $institutesRepo->findAll();
+
+        $instituteNames = array();
+
+        foreach ( $institutes as $institute ) {
+            $instituteNames[$institute->getName()] = $institute->getName();
+        }
+
+        $form = $this->createFormBuilder()
+            ->add('Semester_marks', IntegerType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'label' => 'Minimum Semester Marks',
+            ))
+            ->add('Institute', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => $instituteNames,
+            ))
+            ->add('Save', SubmitType::class, array(
+                'label' => 'Search',
+                'attr' => array('class' => 'btn btn-primary mt-3')
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if( $form->isSubmitted() && $form->isValid() ) {
+
+            $query = $form->getData();
+
+            $studentsRepo = $this->getDoctrine()->getRepository(Student::class)->findBy([
+                
+            ]);
+
+            return $this->render("/company/search.html.twig", array('form' => $form->createView()));
+        }
+
+        return $this->render("/company/search.html.twig", array('form' => $form->createView()));
 
     }
 
