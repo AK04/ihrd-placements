@@ -11,4 +11,4 @@ https://stackoverflow.com/questions/12905404/symfony2-slow-initialization-time
 - Institute functions
 - Company functions
 - Alert messages for invalid login
-- 
+- Update placement status for students in institute controller

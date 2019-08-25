@@ -104,12 +104,27 @@ class CompanyController extends AbstractController {
 
         $institutesRepo = $this->getDoctrine()->getRepository(Institute::class);
 
+        $studentsRepo = $this->getDoctrine()->getRepository(Student::class);
+
+        $students = $studentsRepo->findAll();
+
         $institutes = $institutesRepo->findAll();
 
         $instituteNames = array();
+        $courseNames = array();
+        $branchNames = array();
+        $gender = array("Any" => "Any");
+        $district = array();
 
         foreach ( $institutes as $institute ) {
             $instituteNames[$institute->getName()] = $institute->getName();
+        }
+
+        foreach ( $students as $student ) {
+            $courseNames[$student->getCourse()] = $student->getCourse();
+            $branchNames[$student->getBranch()] = $student->getBranch();
+            $gender[$student->getGender()] = $student->getGender();
+            $district[$student->getNativeDistrict()] = $student->getNativeDistrict();
         }
 
         $form = $this->createFormBuilder()
@@ -117,9 +132,24 @@ class CompanyController extends AbstractController {
                 'attr' => array('class' => 'form-control'),
                 'label' => 'Minimum Semester Marks',
             ))
+            ->add('Course', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => $courseNames,
+            ))
+            ->add('Branch', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => $branchNames,
+            ))
             ->add('Institute', ChoiceType::class, array(
                 'attr' => array('class' => 'form-control'),
                 'choices' => $instituteNames,
+            ))->add('Gender', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => $gender,
+            ))
+            ->add('District', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => $district,
             ))
             ->add('Save', SubmitType::class, array(
                 'label' => 'Search',
@@ -133,11 +163,9 @@ class CompanyController extends AbstractController {
 
             $query = $form->getData();
 
-            $studentsRepo = $this->getDoctrine()->getRepository(Student::class)->findBy([
-                
-            ]);
+            $students = $this->getDoctrine()->getRepository(Student::class)->findStudents($query["Semester_marks"], $query["Course"], $query["Branch"], $query["Institute"], $query["Gender"], $query["District"] );
 
-            return $this->render("/company/search.html.twig", array('form' => $form->createView()));
+            return $this->render("/company/search.html.twig", array('form' => null, 'students' => $students));
         }
 
         return $this->render("/company/search.html.twig", array('form' => $form->createView()));

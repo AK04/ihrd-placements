@@ -7,9 +7,55 @@
 
 {% block body %}
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {% if form %}
 
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+    {% elseif students %}
+
+        <table class="table table-hover">
+
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date of birth</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Native District</th>
+                <th scope="col">Address</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Differently abled</th>
+                <th scope="col">Course</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Passout Year</th>
+                <th scope="col">Semester Marks</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in students %}
+                <tr>
+                    <th scope="row">{{ student.name }}</th>
+                    <td>{{ student.dob }}</td>
+                    <td>{{ student.gender }}</td>
+                    <td>{{ student.NativeDistrict }}</td>
+                    <td>{{ student.address }}</td>
+                    <td>{{ student.MobileNo }}</td>
+                    <td>{{ student.DifferentlyAbled }}</td>
+                    <td>{{ student.course }}</td>
+                    <td>{{ student.branch }}</td>
+                    <td>{{ student.passoutYear }}</td>
+                    <td>{{ student.semesterMarks }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    {% else %}
+
+        <h1> No results for the search </h1>
+
+    {% endif %}
 
 {% endblock %}
